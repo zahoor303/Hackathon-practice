@@ -416,9 +416,9 @@ const HeroSection = () => {
               <p className="text-gray-700 mb-6">
                 Safety and comfort while driving a futuristic and elegant sports car.
               </p>
-              <Image src="/view.png" alt="Car" width={600} height={300} className="rounded-lg" />
+              <Image src="/View.png" alt="Car" width={600} height={300} className="rounded-lg" />
               <div className="flex gap-4 mt-4">
-                {["/image.png", "/view2.png", "/view 3.png"].map((src, index) => (
+                {["/image.png", "/View2.png", "/View3.png"].map((src, index) => (
                   <Image key={index} src={src} alt="Car View" width={80} height={80} className="rounded-md border cursor-pointer" />
                 ))}
               </div>
