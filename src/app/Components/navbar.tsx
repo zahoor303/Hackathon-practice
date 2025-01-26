@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 const Navbar = () => {
   return (
     <nav className="bg-white shadow-sm px-6 py-4 flex justify-between items-center flex-wrap">
@@ -131,9 +132,11 @@ const Navbar = () => {
 
         {/* Profile Icon */}
         <Link href={"/Dashborad/"}>
-          <img
+          <Image
             src="/image1.png" // Add a valid profile image in your public folder
             alt="User"
+            width={40}
+            height={40}
             className="w-10 h-10 rounded-full"
           />
         </Link>

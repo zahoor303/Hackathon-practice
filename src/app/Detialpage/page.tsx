@@ -265,7 +265,7 @@ import Navbar from "../Components/navbar";
 import ReviewsSection from "./review";
 import RecommendedCars from "./Recommend";
 import { useState } from "react";
-import  Slug  from "@/app/carpost/[slug]/page";
+
 
 const HeroSection = () => {
   const cars = [
@@ -493,7 +493,7 @@ const HeroSection = () => {
                     </p>
                   </div>
                   <Link href={`/carpost/${car.image}`}>
-                  <button className="bg-blue-600 text-white w-full mt-4 py-2 rounded-md">
+                  <button className="bg-blue-500 text-white px-2 py-2 rounded-lg hover:bg-blue-600 transition">
                     Rent Now
                   </button>
                 </Link>

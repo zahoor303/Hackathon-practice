@@ -4,6 +4,7 @@ import client from "@/sanity/lib/client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
+import Link from "next/link";
 
 async function getProduct(slug: string) {
   const query = `*[_type == "car" && slug.current == $slug][0] {
@@ -83,8 +84,8 @@ export default function ProductDetail() {
               src={product.imageUrl}
               alt={product.name}
               className=" object-cover"
-              width={400}
-              height={300}
+              width={332}
+              height={150}
             />
             <div className="absolute top-4 left-4 bg-blue-500 text-white px-4 py-1 rounded-full text-sm">
               {product.type}
@@ -118,13 +119,14 @@ export default function ProductDetail() {
                 </li>
               </ul>
             </div>
-
+<Link href="/paymentpage">
             <button
               onClick={addToCart}
               className="mt-6 w-full px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition"
             >
               Add to Cart
             </button>
+            </Link>
           </div>
         </div>
 

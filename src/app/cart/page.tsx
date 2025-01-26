@@ -1,129 +1,236 @@
+// "use client";
+
+// import { useEffect, useState } from "react";
+// import Image from "next/image";
+// import { useRouter } from "next/navigation";
+
+
+// export default function CartPage() {
+//   const [cart, setCart] = useState<any[]>([]);
+//   const [total, setTotal] = useState();
+//   const router = useRouter();
+
+//   useEffect(() => {
+//     // Fetch cart items from localStorage
+//     const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+//     // Ensure the data is valid
+//     const validatedCart = storedCart.map((item: any) => ({
+//       ...item,
+//       pricePerDay: parseFloat(item.pricePerDay) || 0, // Ensure pricePerDay is a number
+//       quantity: parseInt(item.quantity) || 1, // Ensure quantity is a number
+//     }));
+
+//     setCart(validatedCart);
+
+//     // Calculate total price
+//     const totalPrice = validatedCart.reduce(
+//       (acc: number, item: any) => acc + item.pricePerDay * item.quantity,
+//       0
+//     );
+//     setTotal(totalPrice);
+//   }, []);
+
+//   const handleRemove = (id: string) => {
+//     const updatedCart = cart.filter((item) => item._id !== id);
+//     setCart(updatedCart);
+//     localStorage.setItem("cart", JSON.stringify(updatedCart));
+//     alert("Item removed from cart!");
+//   };
+
+//   const handleCheckout = () => {
+//     alert("Proceeding to checkout!");
+//     router.push("/checkout"); // Navigate to checkout page
+//   };
+
+//   if (cart.length === 0) {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center bg-gray-100">
+//         <h1 className="text-2xl font-bold text-gray-600">
+//           Your cart is empty. 🛒
+//         </h1>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="max-w-4xl mx-auto p-6 bg-gray-100 min-h-screen">
+//       <h1 className="text-3xl font-bold text-gray-800 mb-6">Your Cart</h1>
+//       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+//         <ul>
+//           {cart.map((item) => (
+//             <li
+//               key={item._id}
+//               className="flex items-center justify-between border-b p-4"
+//             >
+//               <div className="flex items-center space-x-4">
+//                 <Image
+//                   src={item.imageUrl}
+//                   alt={item.name}
+//                   width={80}
+//                   height={80}
+//                   className="rounded-md"
+//                 />
+//                 <div>
+//                   <h2 className="text-lg font-bold">{item.name}</h2>
+//                   <p className="text-sm text-gray-600">
+//                      ${item.pricePerDay}
+//                   </p>
+//                   <p className="text-sm text-gray-600">
+//                     Quantity: {item.quantity}
+//                   </p>
+//                 </div>
+//               </div>
+//               <div className="flex items-center space-x-4">
+//                 <p className="text-lg font-bold">
+//                   ${item.pricePerDay * item.quantity}
+//                 </p>
+//                 <button
+//                   onClick={() => handleRemove(item._id)}
+//                   className="text-red-600 hover:underline"
+//                 >
+//                   Remove
+//                 </button>
+//               </div>
+//             </li>
+//           ))}
+//         </ul>
+//         <div className="p-4">
+//           <div className="flex justify-between items-center text-lg font-bold">
+//             <span>Total:</span>
+//             <span>${total}</span>
+//           </div>
+//           <button
+//             onClick={handleCheckout}
+//             className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
+//           >
+//             Checkout
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+
+
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import SummarySection from "./totalprice";
+import { useRouter } from "next/navigation";
 
-const CartPage = () => {
-  const [cartItems, setCartItems] = useState<any[]>([]);
-  const [totalPrice, setTotalPrice] = useState(0);
+export default function CartPage() {
+  const [cart, setCart] = useState<any[]>([]);
+  const [total, setTotal] = useState<number>(0); // Initialize total as a number
+  const router = useRouter();
 
-  // Load cart items from localStorage on component mount
   useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    setCartItems(savedCart);
-  }, []);
+    // Fetch cart items from localStorage
+    const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-  // Calculate the total price
-  useEffect(() => {
-    const total = cartItems.reduce(
-      (acc, item) => acc + item.pricePerDay * item.quantity,
+    // Ensure all cart items have valid prices and quantities
+    const validatedCart = storedCart.map((item: any) => ({
+      ...item,
+      pricePerDay: parseFloat(item.pricePerDay), // Ensure pricePerDay is a number
+      quantity: parseInt(item.quantity), // Ensure quantity is a number
+    }));
+
+    setCart(validatedCart);
+
+    // Calculate the total price
+    const totalPrice = validatedCart.reduce(
+      (acc: number, item: any) => acc + item.pricePerDay * item.quantity,
       0
     );
-    setTotalPrice(total);
-  }, [cartItems]);
 
-  // Handle quantity change
-  const handleQuantityChange = (id: string, quantity: number) => {
-    if (quantity < 1) return; // Prevent zero or negative quantities
-    const updatedCart = cartItems.map((item) =>
-      item._id === id ? { ...item, quantity } : item
+    setTotal(totalPrice); // Update total
+  }, []);
+
+  const handleRemove = (id: string) => {
+    // Remove item from cart
+    const updatedCart = cart.filter((item) => item._id !== id);
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+    // Recalculate total
+    const updatedTotal = updatedCart.reduce(
+      (acc: number, item: any) => acc + item.pricePerDay * item.quantity,
+      0
     );
-    setCartItems(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    setTotal(updatedTotal);
+
+    alert("Item removed from cart!");
   };
 
-  // Remove item from cart
-  const handleRemoveItem = (id: string) => {
-    const updatedCart = cartItems.filter((item) => item._id !== id);
-    setCartItems(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  const handleCheckout = () => {
+    alert("Proceeding to checkout!");
+    router.push("/checkout"); // Navigate to checkout page
   };
+
+  if (cart.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <h1 className="text-2xl font-bold text-gray-600">
+          Your cart is empty. 🛒
+        </h1>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-6">
-      <div className="container mx-auto max-w-5xl">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">Your Cart</h1>
-
-        {cartItems.length === 0 ? (
-          <div className="text-center">
-            <p className="text-xl text-gray-500 mb-6">
-              Your cart is empty. Add some items to see them here.
-            </p>
-            <Link href="/cars">
-              <button className="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700">
-                Browse Cars
-              </button>
-            </Link>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Cart Items Section */}
-            <div className="md:col-span-2 space-y-4">
-              {cartItems.map((item) => (
-                <div
-                  key={item._id}
-                  className="flex items-start bg-white p-4 rounded-lg shadow-md"
-                >
-                  {/* Image */}
-                  <Image
-                    src={item.imageUrl}
-                    alt={item.name}
-                    className="rounded-lg"
-                    width={120}
-                    height={80}
-                  />
-                  {/* Details */}
-                  <div className="ml-4 flex-1">
-                    <h2 className="text-lg font-bold text-gray-800">
-                      {item.name}
-                    </h2>
-                    <p className="text-gray-600 text-sm">{item.type}</p>
-                    <div className="flex items-center mt-2">
-                      <span className="text-sm text-gray-500">
-                        Price: {item.pricePerDay}/day
-                      </span>
-                    </div>
-                    {/* Quantity Controls */}
-                    <div className="flex items-center text-black mt-4">
-                      <button
-                        onClick={() =>
-                          handleQuantityChange(item._id, item.quantity - 1)
-                        }
-                        className="px-2 py-1 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
-                      >
-                        -
-                      </button>
-                      <span className="px-4">{item.quantity}</span>
-                      <button
-                        onClick={() =>
-                          handleQuantityChange(item._id, item.quantity + 1)
-                        }
-                        className="px-2 py-1 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  {/* Remove Button */}
-                  <button
-                    onClick={() => handleRemoveItem(item._id)}
-                    className="text-red-500 font-bold ml-4 hover:underline"
-                  >
-                    Remove
-                  </button>
+    <div className="max-w-full mx-auto p-6 bg-gray-100 min-h-screen ">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Your Cart</h1>
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+        <ul>
+          {cart.map((item) => (
+            <li
+              key={item._id}
+              className="flex items-center justify-between border-b p-4"
+            >
+              <div className="flex items-center space-x-4">
+                <Image
+                  src={item.imageUrl}
+                  alt={item.name}
+                  width={80}
+                  height={80}
+                  className="rounded-md"
+                />
+                <div>
+                  <h2 className="text-lg font-bold">{item.name}</h2>
+                  <p className="text-sm text-gray-600">Price: ${item.pricePerDay}</p>
+                  <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
                 </div>
-              ))}
-            </div>
-{/* Summary Section */}
-            <SummarySection totalPrice={totalPrice} />
-            
+              </div>
+              <div className="flex items-center space-x-4">
+                <p className="text-lg font-bold">
+                  Total: ${item.pricePerDay * item.quantity}
+                </p>
+                <button
+                  onClick={() => handleRemove(item._id)}
+                  className="text-red-600 hover:underline"
+                >
+                  Remove
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div className="p-4">
+          <div className="flex justify-between items-center text-lg font-bold">
+            <span>Total Price:</span>
+            <span>${total.toFixed(2)}</span>
           </div>
-        )}
+          <button
+            onClick={handleCheckout}
+            className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
+          >
+            Checkout
+          </button>
+        </div>
       </div>
     </div>
   );
-};
-
-export default CartPage;
+}

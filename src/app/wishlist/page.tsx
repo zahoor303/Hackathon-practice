@@ -250,7 +250,7 @@ export default function Wishlist() {
               <p className="text-gray-600 mt-2">{item.pricePerDay}</p>
 
               {/* Add to cart */} 
-              <Link href={`/cart`}>
+              <Link href={`/paymentpage`}>
 
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
