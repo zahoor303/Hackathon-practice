@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 
+// Fetch product details from Sanity
 async function getProduct(slug: string) {
   const query = `*[_type == "car" && slug.current == $slug][0] {
     _id,
@@ -30,17 +31,29 @@ export default function ProductDetail() {
 
   useEffect(() => {
     async function fetchData() {
-      const slug = params.slug; // Use `params` directly
-      if (!slug) return;
+      const slug = params?.slug;
 
-      const fetchedProduct = await getProduct(slug);
-      setProduct(fetchedProduct);
-      setLoading(false);
+      if (!slug || Array.isArray(slug)) {
+        console.error("Invalid slug provided.");
+        return;
+      }
+
+      try {
+        const fetchedProduct = await getProduct(slug);
+        setProduct(fetchedProduct);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      } finally {
+        setLoading(false);
+      }
     }
+
     fetchData();
   }, [params]);
 
   const addToCart = () => {
+    if (!product) return;
+
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
     const existingItem = cart.find((item: any) => item._id === product._id);
 
@@ -74,7 +87,7 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className=" mx-auto py-10 px-6 bg-gray-100 min-h-screen">
+    <div className="mx-auto py-10 px-6 bg-gray-100 min-h-screen">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         {/* Product Image and Details */}
         <div className="grid grid-cols-1 md:grid-cols-2">
@@ -83,7 +96,7 @@ export default function ProductDetail() {
             <Image
               src={product.imageUrl}
               alt={product.name}
-              className=" object-cover"
+              className="object-cover"
               width={332}
               height={150}
             />
@@ -100,10 +113,10 @@ export default function ProductDetail() {
               </h1>
               <div className="flex items-center mb-6">
                 <span className="text-lg text-blue-600 font-bold">
-                  {product.pricePerDay} <span className="text-sm"></span>
+                  ${product.pricePerDay} / Day
                 </span>
                 <span className="text-sm text-gray-500 line-through ml-4">
-                  {product.originalPrice}
+                  ${product.originalPrice}
                 </span>
               </div>
               <ul className="space-y-2 text-gray-700">
@@ -119,13 +132,13 @@ export default function ProductDetail() {
                 </li>
               </ul>
             </div>
-<Link href="/paymentpage">
-            <button
-              onClick={addToCart}
-              className="mt-6 w-full px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition"
-            >
-              Add to Cart
-            </button>
+            <Link href="/paymentpage">
+              <button
+                onClick={addToCart}
+                className="mt-6 w-full px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition"
+              >
+                Add to Cart
+              </button>
             </Link>
           </div>
         </div>
