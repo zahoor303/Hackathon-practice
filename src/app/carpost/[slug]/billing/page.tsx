@@ -20,7 +20,7 @@ if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) {
   throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined");
 }
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+const stripePromise = loadStripe("pk_test_51QlltdLpXsj6mi45y5AxXPP7LEMKtZUgwVR3nEZuC2qtWaHKkG04IrhnIj5JTq6mPhgLw6t4jQik3rfCQl0E7xZJ00eahQ83If");
 
 // Utility function to clean price (remove "$" and "day")
 const cleanPrice = (price: string) => {
