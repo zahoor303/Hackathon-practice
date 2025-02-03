@@ -1,10 +1,10 @@
 "use client"; // Mark this as a Client Component
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation'; // Import the hook
+// import { useSearchParams } from 'next/navigation'; // Import the hook
 
 export default function PaymentSuccess() {
-  const searchParams = useSearchParams(); // Get the search parameters using the hook
-  const amount = searchParams.get("amount"); // Access the amount parameter
+  // const searchParams = useSearchParams(); // Get the search parameters using the hook
+  // const amount = searchParams.get("amount"); // Access the amount parameter
 
   return (
     <main className="mt-20 flex items-center justify-center min-h-screen bg-gradient-to-tr from-blue-500 to-blue-400">
