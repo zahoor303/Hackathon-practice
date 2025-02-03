@@ -1,4 +1,7 @@
+
+
 // "use client";
+
 // import { useState } from "react";
 
 // const SettingsPage = () => {
@@ -35,24 +38,24 @@
 
 //   return (
 //     <div className="container mx-auto py-10 px-6 max-w-4xl">
-//       <h1 className="text-4xl font-extrabold mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+//       <h1 className="text-4xl font-extrabold mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-700">
 //         Settings
 //       </h1>
 
 //       {/* Profile Settings */}
 //       <section className="mb-12">
-//         <h2 className="text-2xl font-bold mb-6 text-purple-600">
+//         <h2 className="text-2xl font-bold mb-6 text-blue-600">
 //           Profile Settings
 //         </h2>
-//         <div className="bg-gradient-to-r from-indigo-100 to-purple-100 p-8 rounded-xl shadow-md space-y-6">
+//         <div className="bg-gradient-to-r from-blue-100 to-cyan-100 p-8 rounded-xl shadow-md space-y-6">
 //           <div>
 //             <label className="block font-medium text-gray-800 mb-2">Name</label>
-//             <input 
+//             <input
 //               type="text"
 //               name="name"
 //               value={profile.name}
 //               onChange={handleProfileChange}
-//               className="w-full border text-black border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
+//               className="w-full border text-black border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
 //             />
 //           </div>
 //           <div>
@@ -62,10 +65,10 @@
 //               name="email"
 //               value={profile.email}
 //               onChange={handleProfileChange}
-//               className="w-full border text-black border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
+//               className="w-full border text-black border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
 //             />
 //           </div>
-//           <button className="w-full bg-purple-500 text-white py-3 rounded-lg font-semibold hover:bg-purple-600 transition duration-300 shadow-md">
+//           <button className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 shadow-md">
 //             Save Changes
 //           </button>
 //         </div>
@@ -73,10 +76,10 @@
 
 //       {/* Notification Preferences */}
 //       <section className="mb-12">
-//         <h2 className="text-2xl font-bold mb-6 text-pink-600">
+//         <h2 className="text-2xl font-bold mb-6 text-blue-600">
 //           Notification Preferences
 //         </h2>
-//         <div className="bg-gradient-to-r from-pink-100 to-red-100 p-8 rounded-xl shadow-md space-y-4">
+//         <div className="bg-gradient-to-r from-blue-100 to-cyan-100 p-8 rounded-xl shadow-md space-y-4">
 //           {Object.keys(notifications).map((type) => (
 //             <div key={type} className="flex items-center space-x-3">
 //               <input
@@ -84,12 +87,12 @@
 //                 name={type}
 //                 checked={notifications[type as keyof typeof notifications]}
 //                 onChange={handleNotificationChange}
-//                 className="w-5 h-5 text-pink-600 focus:ring-2 focus:ring-pink-400"
+//                 className="w-5 h-5 text-blue-600 focus:ring-2 focus:ring-blue-400"
 //               />
 //               <span className="text-gray-800 capitalize">{type} Notifications</span>
 //             </div>
 //           ))}
-//           <button className="w-full bg-pink-500 text-white py-3 rounded-lg font-semibold hover:bg-pink-600 transition duration-300 shadow-md">
+//           <button className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 shadow-md">
 //             Save Preferences
 //           </button>
 //         </div>
@@ -97,8 +100,10 @@
 
 //       {/* Account Management */}
 //       <section>
-//         <h2 className="text-2xl font-bold mb-6 text-red-600">Account Management</h2>
-//         <div className="bg-gradient-to-r from-red-100 to-orange-100 p-8 rounded-xl shadow-md text-center">
+//         <h2 className="text-2xl font-bold mb-6 text-blue-600">
+//           Account Management
+//         </h2>
+//         <div className="bg-gradient-to-r from-blue-100 to-cyan-100 p-8 rounded-xl shadow-md text-center">
 //           <p className="text-gray-700 mb-6">
 //             Deleting your account is permanent and cannot be undone.
 //           </p>
@@ -107,7 +112,7 @@
 //             disabled={isDeletingAccount}
 //             className={`w-full py-3 rounded-lg text-white font-bold transition duration-300 ${
 //               isDeletingAccount
-//                 ? "bg-red-400 cursor-not-allowed"
+//                 ? "bg-red-300 cursor-not-allowed"
 //                 : "bg-red-500 hover:bg-red-600"
 //             } shadow-md`}
 //           >
@@ -123,13 +128,10 @@
 
 
 
-
-
-
-
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion"; // For adding animations
 
 const SettingsPage = () => {
   const [profile, setProfile] = useState({
@@ -164,17 +166,25 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className="container mx-auto py-10 px-6 max-w-4xl">
-      <h1 className="text-4xl font-extrabold mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-700">
+    <motion.div
+      className="container mx-auto py-10 px-6 max-w-4xl"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h1 className="text-4xl font-extrabold mb-10 text-center text-blue-600">
         Settings
       </h1>
 
       {/* Profile Settings */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-6 text-blue-600">
-          Profile Settings
-        </h2>
-        <div className="bg-gradient-to-r from-blue-100 to-cyan-100 p-8 rounded-xl shadow-md space-y-6">
+      <motion.section
+        className="mb-12"
+        initial={{ x: "-100vw" }}
+        animate={{ x: 0 }}
+        transition={{ type: "spring", stiffness: 100, damping: 25 }}
+      >
+        <h2 className="text-2xl font-bold mb-6 text-blue-500">Profile Settings</h2>
+        <div className="bg-white p-8 rounded-xl shadow-lg space-y-6">
           <div>
             <label className="block font-medium text-gray-800 mb-2">Name</label>
             <input
@@ -182,7 +192,7 @@ const SettingsPage = () => {
               name="name"
               value={profile.name}
               onChange={handleProfileChange}
-              className="w-full border text-black border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border text-black border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
           <div>
@@ -192,21 +202,29 @@ const SettingsPage = () => {
               name="email"
               value={profile.email}
               onChange={handleProfileChange}
-              className="w-full border text-black border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border text-black border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
-          <button className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 shadow-md">
+          <motion.button
+            className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 shadow-md"
+            whileHover={{ scale: 1.05 }}
+          >
             Save Changes
-          </button>
+          </motion.button>
         </div>
-      </section>
+      </motion.section>
 
       {/* Notification Preferences */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-6 text-blue-600">
+      <motion.section
+        className="mb-12"
+        initial={{ x: "100vw" }}
+        animate={{ x: 0 }}
+        transition={{ type: "spring", stiffness: 100, damping: 25 }}
+      >
+        <h2 className="text-2xl font-bold mb-6 text-blue-500">
           Notification Preferences
         </h2>
-        <div className="bg-gradient-to-r from-blue-100 to-cyan-100 p-8 rounded-xl shadow-md space-y-4">
+        <div className="bg-white p-8 rounded-xl shadow-lg space-y-4">
           {Object.keys(notifications).map((type) => (
             <div key={type} className="flex items-center space-x-3">
               <input
@@ -219,22 +237,29 @@ const SettingsPage = () => {
               <span className="text-gray-800 capitalize">{type} Notifications</span>
             </div>
           ))}
-          <button className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 shadow-md">
+          <motion.button
+            className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 shadow-md"
+            whileHover={{ scale: 1.05 }}
+          >
             Save Preferences
-          </button>
+          </motion.button>
         </div>
-      </section>
+      </motion.section>
 
       {/* Account Management */}
-      <section>
-        <h2 className="text-2xl font-bold mb-6 text-blue-600">
+      <motion.section
+        initial={{ y: "100vh" }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 150, damping: 25 }}
+      >
+        <h2 className="text-2xl font-bold mb-6 text-blue-500">
           Account Management
         </h2>
-        <div className="bg-gradient-to-r from-blue-100 to-cyan-100 p-8 rounded-xl shadow-md text-center">
+        <div className="bg-white p-8 rounded-xl shadow-lg text-center">
           <p className="text-gray-700 mb-6">
             Deleting your account is permanent and cannot be undone.
           </p>
-          <button
+          <motion.button
             onClick={handleDeleteAccount}
             disabled={isDeletingAccount}
             className={`w-full py-3 rounded-lg text-white font-bold transition duration-300 ${
@@ -242,12 +267,13 @@ const SettingsPage = () => {
                 ? "bg-red-300 cursor-not-allowed"
                 : "bg-red-500 hover:bg-red-600"
             } shadow-md`}
+            whileHover={!isDeletingAccount ? { scale: 1.05 } : {}}
           >
             {isDeletingAccount ? "Deleting Account..." : "Delete Account"}
-          </button>
+          </motion.button>
         </div>
-      </section>
-    </div>
+      </motion.section>
+    </motion.div>
   );
 };
 

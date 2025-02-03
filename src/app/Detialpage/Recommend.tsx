@@ -1,8 +1,21 @@
-"use client";
+"use client"
 
 import Image from "next/image";
+import { useState } from "react";
 
 const RecommendedCars = ({ cars }: { cars: any[] }) => {
+  const [favorites, setFavorites] = useState(new Set());
+
+  const handleFavoriteToggle = (carId: string) => {
+    const updatedFavorites = new Set(favorites);
+    if (updatedFavorites.has(carId)) {
+      updatedFavorites.delete(carId); // Remove from favorites
+    } else {
+      updatedFavorites.add(carId); // Add to favorites
+    }
+    setFavorites(updatedFavorites);
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen p-6">
       {/* Page Header */}
@@ -29,24 +42,26 @@ const RecommendedCars = ({ cars }: { cars: any[] }) => {
                 height={72}
                 className="rounded-lg object-cover w-full h-15"
               />
-              {car.isFavorite && (
-                <div className="absolute top-2 right-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="red"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6 text-gray-300 hover:text-red-500 cursor-pointer"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                    />
-                  </svg>
-                </div>
-              )}
+              {/* Favorite Icon */}
+              <div
+                onClick={() => handleFavoriteToggle(car._id)}
+                className="absolute top-2 right-2 cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill={favorites.has(car._id) ? "red" : "none"}
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                  />
+                </svg>
+              </div>
             </div>
 
             {/* Car Details */}

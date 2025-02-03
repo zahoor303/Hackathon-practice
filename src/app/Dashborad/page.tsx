@@ -1,233 +1,8 @@
-// "use client";
-// import Image from "next/image";
-// import { useState } from "react";
-// import Navbar from "../Components/navbar";
-
-// const Dashboard = () => {
-//   const [activeTab, setActiveTab] = useState("dashboard");
-
-//   return (
-//     <div className="flex w-full min-h-screen bg-[#F6F7F9]">
-//       {/* Sidebar */}
-//       <aside className="hidden md:block w-[286px] bg-white border-r border-gray-200 p-6">
-//         <div>
-//           {/* Logo */}
-//           <h1 className="text-2xl font-bold text-blue-600 mb-6">MORENT</h1>
-
-//           {/* Main Menu */}
-//           <p className="text-sm text-gray-500 mb-4">MAIN MENU</p>
-//           {[
-//             { name: "dashboard", label: "Dashboard", icon: "/home.png" },
-//             { name: "carRent", label: "Car Rent", icon: "/car.png" },
-//             { name: "insight", label: "Insight", icon: "/chart.png" },
-//             { name: "reimburse", label: "Reimburse", icon: "/wallet.png" },
-//             { name: "inbox", label: "Inbox", icon: "/message.png" },
-//             { name: "calendar", label: "Calendar", icon: "/calendar.png" },
-//           ].map((menu) => (
-//             <div
-//               key={menu.name}
-//               onClick={() => setActiveTab(menu.name)}
-//               className={`flex items-center gap-4 p-3 rounded-lg cursor-pointer mb-2 ${
-//                 activeTab === menu.name
-//                   ? "bg-blue-500 text-white"
-//                   : "text-gray-500 hover:bg-gray-100"
-//               }`}
-//             >
-//               <Image
-//                 src={menu.icon}
-//                 alt={menu.label}
-//                 width={24}
-//                 height={24}
-//                 className="invert"
-//               />
-//               <span className="font-medium">{menu.label}</span>
-//             </div>
-//           ))}
-
-//           {/* Preferences */}
-//           <p className="text-sm text-gray-500 mt-10 mb-4">PREFERENCES</p>
-//           {[
-//             { name: "settings", label: "Settings", icon: "/setting.png" },
-//             { name: "help", label: "Help & Center", icon: "/help.png" },
-//             { name: "darkMode", label: "Dark Mode", icon: "/dark.png" },
-//             { name: "Logout", label: "logout", icon: "/logout.png" },
-//           ].map((menu) => (
-//             <div
-//               key={menu.label}
-//               onClick={() => setActiveTab(menu.label)}
-//               className={`flex items-center gap-4 p-3 rounded-lg cursor-pointer mb-2 ${
-//                 activeTab === menu.label
-//                   ? "bg-blue-500 text-white"
-//                   : "text-gray-500 hover:bg-gray-100"
-//               }`}
-//             >
-//               <Image
-//                 src={menu.icon}
-//                 alt={menu.label}
-//                 width={24}
-//                 height={24}
-//                 className="invert"
-//               />
-//               <span className="font-medium">{menu.label}</span>
-//             </div>
-//           ))}
-//         </div>
-//       </aside>
-
-//       {/* Main Content */}
-//       <main className="flex-1 p-6">
-//          <Navbar/>
-
-//         {/* Content */}
-//         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-//           {/* Details Rental */}
-//           <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
-//             <h2 className="text-lg  text-black font-bold mb-4">Details Rental</h2>
-//             <Image
-//               src="/Maps.png"
-//               alt="Map"
-//               width={600}
-//               height={300}
-//               className="rounded-lg"
-//             />
-//             <div className="mt-4 flex justify-between items-center">
-//               <div className="flex items-center gap-4">
-//                 <Image
-//                   src="/Look1.png"
-//                   alt="Car"
-//                   width={60}
-//                   height={40}
-//                   className="rounded-lg"
-//                 />
-//                 <div>
-//                   <h3 className="text-lg text-black font-bold">Nissan GT - R</h3>
-//                   <p className="text-sm text-gray-500">Sport Car</p>
-//                 </div>
-//               </div>
-//               <p className="text-gray-500">#9761</p>
-//             </div>
-//             <div className="mt-4 grid grid-cols-2 gap-6">
-//               <div>
-//                 <h4 className="text-sm text-black font-bold">Pick-Up</h4>
-//                 <p className="text-sm text-gray-500">Kota Semarang</p>
-//                 <p className="text-sm text-gray-500">20 July 2022</p>
-//                 <p className="text-sm text-gray-500">07:00</p>
-//               </div>
-//               <div>
-//                 <h4 className="text-sm text-black font-bold">Drop-Off</h4>
-//                 <p className="text-sm text-gray-500">Kota Jakarta</p>
-//                 <p className="text-sm text-gray-500">21 July 2022</p>
-//                 <p className="text-sm text-gray-500">01:00</p>
-//               </div>
-//             </div>
-//             <div className="mt-6 border-t pt-4 flex justify-between">
-//               <p className="font-bold text-black">Total Rental Price</p>
-//               <p className="text-lg font-bold text-blue-500">$80.00</p>
-//             </div>
-//           </div>
-
-//           {/* Top 5 Car Rentals */}
-//           <div className="bg-white p-6 rounded-lg shadow-md">
-//             <h2 className="text-lg  text-black font-bold mb-4">Top 5 Car Rentals</h2>
-//             <Image
-//               src="/Top5.png"
-//               alt="Chart"
-//               width={300}
-//               height={300}
-//               className="mx-auto"
-//             />
-//             <div className="mt-6 text-black">
-//               {[
-//                 { name: "Sport Car", color: "#3563E9", value: 17439 },
-//                 { name: "SUV", color: "#63A9E8", value: 9478 },
-//                 { name: "Coupe", color: "#2185DE", value: 18197 },
-//                 { name: "Hatchback", color: "#175D9C", value: 12510 },
-//                 { name: "MPV", color: "#0D3559", value: 14406 },
-//               ].map((car, index) => (
-//                 <div key={index} className="flex justify-between items-center">
-//                   <div className="flex items-center gap-2">
-//                     <div
-//                       className="w-3 h-3 rounded-full"
-//                       style={{ backgroundColor: car.color }}
-//                     ></div>
-//                     <p className="text-sm">{car.name}</p>
-//                   </div>
-//                   <p className="text-sm font-bold">{car.value.toLocaleString()}</p>
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-
-//           {/* Recent Transactions */}
-//           <div className="bg-white p-6 rounded-lg shadow-md">
-//             <div className="flex justify-between items-center">
-//               <h2 className="text-lg  text-black font-bold">Recent Transactions</h2>
-//               <a href="#" className="text-blue-500 text-sm">
-//                 View All
-//               </a>
-//             </div>
-//             <ul className="mt-6 text-black space-y-4">
-//               {[
-//                 {
-//                   name: "Nissan GT - R",
-//                   date: "20 July",
-//                   price: "$80.00",
-//                   image: "/car1.png",
-//                 },
-//                 {
-//                   name: "Koenigsegg",
-//                   date: "19 July",
-//                   price: "$99.00",
-//                   image: "/car2.png",
-//                 },
-//                 {
-//                   name: "Rolls-Royce",
-//                   date: "18 July",
-//                   price: "$96.00",
-//                   image: "/car3.png",
-//                 },
-//                 {
-//                   name: "CR - V",
-//                   date: "17 July",
-//                   price: "$80.00",
-//                   image: "/car4.png",
-//                 },
-//               ].map((transaction, index) => (
-//                 <li key={index} className="flex justify-between items-center">
-//                   <div className="flex items-center gap-4">
-//                     <Image
-//                       src={transaction.image}
-//                       alt={transaction.name}
-//                       width={50}
-//                       height={30}
-//                       className="rounded-lg"
-//                     />
-//                     <div>
-//                       <p className="font-bold">{transaction.name}</p>
-//                       <p className="text-sm text-gray-500">{transaction.date}</p>
-//                     </div>
-//                   </div>
-//                   <p className="text-blue-500 font-bold">{transaction.price}</p>
-//                 </li>
-//               ))}
-//             </ul>
-//           </div>
-//         </section>
-//       </main>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
-
-
-
-
-
 "use client";
 import Image from "next/image";
 import { useState } from "react";
 import Navbar from "../Components/navbar";
+import Link from "next/link";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("dashboard"); // Track the active tab
@@ -257,13 +32,14 @@ const Dashboard = () => {
           {/* Main Menu */}
           <p className="text-sm text-gray-500 mb-4">MAIN MENU</p>
           {[
-            { name: "dashboard", label: "Dashboard", icon: "/home.png" },
+            { name: "dashboard", label: "Dashboard",  icon: "/home.png" },
             { name: "carRent", label: "Car Rent", icon: "/car.png" },
             { name: "insight", label: "Insight", icon: "/chart.png" },
             { name: "reimburse", label: "Reimburse", icon: "/wallet.png" },
             { name: "inbox", label: "Inbox", icon: "/message.png" },
             { name: "calendar", label: "Calendar", icon: "/calendar.png" },
           ].map((menu) => (
+       
             <div
               key={menu.name}
               onClick={() => setActiveTab(menu.name)}
@@ -282,6 +58,7 @@ const Dashboard = () => {
               />
               <span className="font-medium">{menu.label}</span>
             </div>
+        
           ))}
 
           {/* Preferences */}
@@ -471,3 +248,9 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+
+
+
+
+
