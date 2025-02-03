@@ -116,7 +116,7 @@ export default function ProductDetail() {
                   {product.pricePerDay}
                 </span>
                 <span className="text-sm text-gray-500 line-through ml-4">
-                  {product.originalPrice}
+                  ${product.originalPrice}
                 </span>
               </div>
               <ul className="space-y-2 text-gray-700">
