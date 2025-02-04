@@ -4,23 +4,23 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutPage from "@/app/Components/checkout";
 import convertToSubcurrency from "../../../../../lib/convetToSubcurrency";
-import { useEffect, useState, use } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AiFillStar } from "react-icons/ai";
 import { urlFor } from "@/sanity/lib/image";
-import  client  from "@/sanity/lib/client";
+import client from "@/sanity/lib/client";
 import Link from "next/link";
-
+import { use } from "react"; // Import use to unwrap params
 
 interface PageProps {
-  params: Promise<{ slug: string }>; 
+  params: Promise<{ slug: string }>; // params is a promise
 }
 
 if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) {
   throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined");
 }
 
-const stripePromise = loadStripe("pk_test_51QlltdLpXsj6mi45y5AxXPP7LEMKtZUgwVR3nEZuC2qtWaHKkG04IrhnIj5JTq6mPhgLw6t4jQik3rfCQl0E7xZJ00eahQ83If");
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 // Utility function to clean price (remove "$" and "day")
 const cleanPrice = (price: string) => {
@@ -29,10 +29,12 @@ const cleanPrice = (price: string) => {
 };
 
 const Payment = ({ params }: PageProps) => {
-  const { slug } = use(params); // ✅ Fix: Use use(params) to unwrap it
+  const { slug } = use(params); // Use `use(params)` to unwrap the `params` Promise
 
   const [car, setCar] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [promoCode, setPromoCode] = useState(""); // State for promo code input
+  const [discount, setDiscount] = useState(0); // State for discount
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -59,19 +61,30 @@ const Payment = ({ params }: PageProps) => {
   // Convert the cleaned price to subcurrency (e.g., cents)
   const amount = convertToSubcurrency(pricePerDay);
 
+  // Apply promo code function
+  const applyPromoCode = () => {
+    if (promoCode.toLowerCase() === "save10") {
+      setDiscount(10); // Apply a $10 discount
+    } else {
+      alert("Invalid promo code");
+    }
+  };
+
+  // Calculate the total after applying the promo code
+  const total = pricePerDay - discount;
+
   return (
     <div className="mt-32 w-full h-auto max-w-[1440px] flex flex-col-reverse lg:flex-row gap-5 space-y-8">
-      
       {/* Payment Section */}
       <Elements
         stripe={stripePromise}
         options={{
           mode: "payment",
-          amount: amount, // Use the cleaned and converted amount here
+          amount: convertToSubcurrency(total), // Use the updated total with the discount
           currency: "usd",
         }}
       >
-        <CheckoutPage amount={pricePerDay} />
+        <CheckoutPage amount={total} />
       </Elements>
 
       {/* Rental Summary */}
@@ -134,17 +147,20 @@ const Payment = ({ params }: PageProps) => {
         </div>
 
         {/* Promo Code */}
-        <div className="mb-4 lg:mb-6 flex flex-col sm:flex-row items-center gap-4 lg:gap-2">
+        <div className="mb-4 lg:mb-6 flex flex-col sm:flex-row items-center gap-4 text-black lg:gap-2">
           <input
             type="text"
-            placeholder="Apply promo code"
+            placeholder="Apply promo code save10"
+            value={promoCode}
+            onChange={(e) => setPromoCode(e.target.value)}
             className="flex-grow h-[40px] sm:h-[48px] bg-[#F6F7F9] rounded-lg px-4 text-[12px] sm:text-[14px] placeholder-[#90A3BF] focus:outline-none"
           />
-          <Link href="/Dashboard">
-            <button className="w-full sm:w-[92px] h-[40px] sm:h-[48px] text-black text-[14px] sm:text-[16px] font-semibold rounded-lg">
-              Apply now
-            </button>
-          </Link>
+          <button
+            onClick={applyPromoCode}
+            className="w-full sm:w-[92px] h-[40px] sm:h-[48px] text-black text-[14px] sm:text-[16px] font-semibold rounded-lg"
+          >
+            Apply now
+          </button>
         </div>
 
         {/* Total Price */}
@@ -154,7 +170,7 @@ const Payment = ({ params }: PageProps) => {
               Total Rental Price
             </span>
             <span className="text-[20px] sm:text-[24px] font-bold text-[#3563E9]">
-              ${pricePerDay}
+              ${total} {/* Updated total with discount */}
             </span>
           </div>
           <p className="text-[12px] sm:text-[14px] text-[#90A3BF] text-center sm:text-left">
@@ -167,3 +183,4 @@ const Payment = ({ params }: PageProps) => {
 };
 
 export default Payment;
+
