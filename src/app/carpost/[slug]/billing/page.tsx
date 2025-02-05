@@ -9,11 +9,11 @@ import Image from "next/image";
 import { AiFillStar } from "react-icons/ai";
 import { urlFor } from "@/sanity/lib/image";
 import client from "@/sanity/lib/client";
-import Link from "next/link";
-import { use } from "react"; // Import use to unwrap params
+import { use } from "react";
+
 
 interface PageProps {
-  params: Promise<{ slug: string }>; // params is a promise
+  params: Promise<{ slug: string }>;
 }
 
 if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) {
@@ -22,19 +22,17 @@ if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) {
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-// Utility function to clean price (remove "$" and "day")
 const cleanPrice = (price: string) => {
-  const cleanedPrice = price.replace(/[^\d.-]/g, ""); // Remove all non-numeric characters except for "." and "-"
-  return parseFloat(cleanedPrice); // Convert to number
+  const cleanedPrice = price.replace(/[^\d.-]/g, "");
+  return parseFloat(cleanedPrice);
 };
 
 const Payment = ({ params }: PageProps) => {
-  const { slug } = use(params); // Use `use(params)` to unwrap the `params` Promise
-
+  const { slug } = use(params);
   const [car, setCar] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [promoCode, setPromoCode] = useState(""); // State for promo code input
-  const [discount, setDiscount] = useState(0); // State for discount
+  const [promoCode, setPromoCode] = useState("");
+  const [discount, setDiscount] = useState(0);
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -55,32 +53,29 @@ const Payment = ({ params }: PageProps) => {
   if (loading) return <p>Loading...</p>;
   if (!car) return <p>Car not found!</p>;
 
-  // Clean the pricePerDay string and convert to number
   const pricePerDay = cleanPrice(car?.pricePerDay || "0");
-
-  // Convert the cleaned price to subcurrency (e.g., cents)
   const amount = convertToSubcurrency(pricePerDay);
-
-  // Apply promo code function
   const applyPromoCode = () => {
     if (promoCode.toLowerCase() === "save10") {
-      setDiscount(10); // Apply a $10 discount
+      setDiscount(10);
     } else {
       alert("Invalid promo code");
     }
   };
 
-  // Calculate the total after applying the promo code
   const total = pricePerDay - discount;
 
   return (
-    <div className="mt-32 w-full h-auto max-w-[1440px] flex flex-col-reverse lg:flex-row gap-5 space-y-8">
+    
+    <div className="flex flex-col-reverse lg:flex-row gap-5 p-5 bg-white">
+    
       {/* Payment Section */}
+     
       <Elements
         stripe={stripePromise}
         options={{
           mode: "payment",
-          amount: convertToSubcurrency(total), // Use the updated total with the discount
+          amount: convertToSubcurrency(total),
           currency: "usd",
         }}
       >
@@ -88,16 +83,15 @@ const Payment = ({ params }: PageProps) => {
       </Elements>
 
       {/* Rental Summary */}
-      <div className="mx-10 max-w-[700px] lg:h-[560px] rounded-lg bg-white space-y-8 p-10 xl:mr-10">
-        <div className="mb-4 lg:mb-6">
-          <h2 className="text-[18px] sm:text-[20px] font-bold text-[#1A202C]">
-            Rental Summary
-          </h2>
-          <p className="text-[12px] sm:text-[14px] text-[#90A3BF] font-medium">
-            Prices may change depending on the length of the rental and the
-            price of your rental car.
+      
+      <div className="flex flex-col max-w-[700px] w-full bg-white rounded-lg p-6 shadow-lg">
+        <div className="mb-4">
+          <h2 className="text-lg sm:text-xl font-semibold text-[#1A202C]">Rental Summary</h2>
+          <p className="text-xs sm:text-sm text-[#acb9cb]">
+            Prices may change depending on the length of the rental and the price of your rental car.
           </p>
         </div>
+
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-4">
           <div className="w-[96px] h-[72px] bg-[#abb1c4] rounded-lg flex justify-center items-center">
             {car?.image ? (
@@ -105,7 +99,7 @@ const Payment = ({ params }: PageProps) => {
                 src={urlFor(car.image).url()}
                 alt={car?.name || "Car"}
                 width={116}
-                height={36}
+                height={72}
                 className="rounded-md object-cover"
               />
             ) : (
@@ -113,51 +107,40 @@ const Payment = ({ params }: PageProps) => {
             )}
           </div>
           <div className="text-center sm:text-left">
-            <h3 className="text-[20px] sm:text-[28px] font-bold text-[#1A202C]">
-              {car?.name || "Unknown Car"}
-            </h3>
-            <div className="flex items-center justify-center sm:justify-start text-[#FFCC00] text-[14px] sm:text-[16px]">
+            <h3 className="text-xl sm:text-2xl font-bold text-[#1A202C]">{car?.name || "Unknown Car"}</h3>
+            <div className="flex items-center justify-center sm:justify-start text-[#FFCC00] text-sm sm:text-base">
               <AiFillStar />
               <AiFillStar />
               <AiFillStar />
               <AiFillStar />
-              <span className="text-[#90A3BF] text-[12px] sm:text-[14px] ml-2">
-                440+ Reviews
-              </span>
+              <span className="text-[#90A3BF] text-xs sm:text-sm ml-2">440+ Reviews</span>
             </div>
           </div>
         </div>
-        <div className="mb-4 lg:mb-6">
+
+        <div className="mb-4">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-[14px] sm:text-[16px] font-medium text-[#90A3BF]">
-              Subtotal
-            </span>
-            <span className="text-[14px] sm:text-[16px] font-semibold text-[#1A202C] mr-10">
-              ${pricePerDay}
-            </span>
+            <span className="text-sm sm:text-base font-medium text-[#90A3BF]">Subtotal</span>
+            <span className="text-sm sm:text-base font-semibold text-[#1A202C]">${pricePerDay}</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-[14px] sm:text-[16px] font-medium text-[#90A3BF]">
-              Tax
-            </span>
-            <span className="text-[14px] sm:text-[16px] font-semibold text-[#1A202C] mr-10">
-              $0
-            </span>
+            <span className="text-sm sm:text-base font-medium text-[#90A3BF]">Tax</span>
+            <span className="text-sm sm:text-base font-semibold text-[#1A202C]">$0</span>
           </div>
         </div>
 
         {/* Promo Code */}
-        <div className="mb-4 lg:mb-6 flex flex-col sm:flex-row items-center gap-4 text-black lg:gap-2">
+        <div className="flex flex-col sm:flex-row gap-4 text-black items-center mb-4">
           <input
             type="text"
             placeholder="Apply promo code save10"
             value={promoCode}
             onChange={(e) => setPromoCode(e.target.value)}
-            className="flex-grow h-[40px] sm:h-[48px] bg-[#F6F7F9] rounded-lg px-4 text-[12px] sm:text-[14px] placeholder-[#90A3BF] focus:outline-none"
+            className="flex-grow h-10 sm:h-12 bg-[#F6F7F9] rounded-lg px-4 text-xs sm:text-sm placeholder-[#90A3BF] focus:outline-none"
           />
           <button
             onClick={applyPromoCode}
-            className="w-full sm:w-[92px] h-[40px] sm:h-[48px] text-black text-[14px] sm:text-[16px] font-semibold rounded-lg"
+            className="w-full sm:w-[92px] h-10 sm:h-12 bg-[#3563E9] text-white text-xs sm:text-sm font-semibold rounded-lg"
           >
             Apply now
           </button>
@@ -165,15 +148,11 @@ const Payment = ({ params }: PageProps) => {
 
         {/* Total Price */}
         <div className="border-t border-[#EDEDED] pt-4">
-          <div className="flex flex-col sm:flex-row justify-between items-center mb-2">
-            <span className="text-[16px] sm:text-[20px] font-bold text-[#1A202C]">
-              Total Rental Price
-            </span>
-            <span className="text-[20px] sm:text-[24px] font-bold text-[#3563E9]">
-              ${total} {/* Updated total with discount */}
-            </span>
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm sm:text-lg font-bold text-[#1A202C]">Total Rental Price</span>
+            <span className="text-xl sm:text-2xl font-bold text-[#3563E9]">${total}</span>
           </div>
-          <p className="text-[12px] sm:text-[14px] text-[#90A3BF] text-center sm:text-left">
+          <p className="text-xs sm:text-sm text-[#90A3BF] text-center sm:text-left">
             Overall price and includes rental discount
           </p>
         </div>
@@ -183,4 +162,3 @@ const Payment = ({ params }: PageProps) => {
 };
 
 export default Payment;
-
