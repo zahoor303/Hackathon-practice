@@ -1,4 +1,5 @@
-"use client";
+'use client';
+
 import Image from "next/image";
 import { useState } from "react";
 import Navbar from "../Components/navbar";
@@ -32,61 +33,60 @@ const Dashboard = () => {
           {/* Main Menu */}
           <p className="text-sm text-gray-500 mb-4">MAIN MENU</p>
           {[
-            { name: "dashboard", label: "Dashboard",  icon: "/home.png" },
-            { name: "carRent", label: "Car Rent", icon: "/car.png" },
-            { name: "insight", label: "Insight", icon: "/chart.png" },
-            { name: "reimburse", label: "Reimburse", icon: "/wallet.png" },
-            { name: "inbox", label: "Inbox", icon: "/message.png" },
-            { name: "calendar", label: "Calendar", icon: "/calendar.png" },
+            { name: "dashboard", label: "Dashboard", icon: "/home.png", link: "/" },
+            { name: "carRent", label: "Car Rent", icon: "/car.png", link: "/car-rent" },
+            { name: "insight", label: "Insight", icon: "/chart.png", link: "/insight" },
+            { name: "reimburse", label: "Reimburse", icon: "/wallet.png", link: "/reimburse" },
+            { name: "inbox", label: "Inbox", icon: "/message.png", link: "/inbox" },
+            { name: "calendar", label: "Calendar", icon: "/calendar.png", link: "/calendar" },
           ].map((menu) => (
-       
-            <div
-              key={menu.name}
-              onClick={() => setActiveTab(menu.name)}
-              className={`flex items-center gap-4 p-3 rounded-lg cursor-pointer mb-2 ${
-                activeTab === menu.name
-                  ? "bg-blue-500 text-white"
-                  : "text-gray-500 hover:bg-gray-100"
-              }`}
-            >
-              <Image
-                src={menu.icon}
-                alt={menu.label}
-                width={24}
-                height={24}
-                className="invert"
-              />
-              <span className="font-medium">{menu.label}</span>
-            </div>
-        
+            <Link key={menu.name} href={menu.link}>
+              <div
+                onClick={() => setActiveTab(menu.name)}
+                className={`flex items-center gap-4 p-3 rounded-lg cursor-pointer mb-2 ${
+                  activeTab === menu.name
+                    ? "bg-blue-500 text-white"
+                    : "text-gray-500 hover:bg-gray-100"
+                }`}
+              >
+                <Image
+                  src={menu.icon}
+                  alt={menu.label}
+                  width={24}
+                  height={24}
+                  className="invert"
+                />
+                <span className="font-medium">{menu.label}</span>
+              </div>
+            </Link>
           ))}
 
           {/* Preferences */}
           <p className="text-sm text-gray-500 mt-10 mb-4">PREFERENCES</p>
           {[
-            { name: "settings", label: "Settings", icon: "/setting.png" },
-            { name: "help", label: "Help & Center", icon: "/help.png" },
-            { name: "darkMode", label: "Dark Mode", icon: "/dark.png" },
-            { name: "logout", label: "Logout", icon: "/logout.png" },
+            { name: "settings", label: "Settings", icon: "/setting.png", link: "/setting-1" },
+            { name: "help", label: "Help & Center", icon: "/help.png", link: "/help-center" },
+            { name: "darkMode", label: "Dark Mode", icon: "/dark.png", link: "/dark-mode" },
           ].map((menu) => (
-            <div
-              key={menu.label}
-              onClick={() => setActiveTab(menu.label)}
-              className={`flex items-center gap-4 p-3 rounded-lg cursor-pointer mb-2 ${
-                activeTab === menu.label
-                  ? "bg-blue-500 text-white"
-                  : "text-gray-500 hover:bg-gray-100"
-              }`}
-            >
-              <Image
-                src={menu.icon}
-                alt={menu.label}
-                width={24}
-                height={24}
-                className="invert"
-              />
-              <span className="font-medium">{menu.label}</span>
-            </div>
+            <Link key={menu.name} href={menu.link}>
+              <div
+                onClick={() => setActiveTab(menu.name)}
+                className={`flex items-center gap-4 p-3 rounded-lg cursor-pointer mb-2 ${
+                  activeTab === menu.name
+                    ? "bg-blue-500 text-white"
+                    : "text-gray-500 hover:bg-gray-100"
+                }`}
+              >
+                <Image
+                  src={menu.icon}
+                  alt={menu.label}
+                  width={24}
+                  height={24}
+                  className="invert"
+                />
+                <span className="font-medium">{menu.label}</span>
+              </div>
+            </Link>
           ))}
         </div>
       </aside>
@@ -171,24 +171,20 @@ const Dashboard = () => {
               className="mx-auto"
             />
             <div className="mt-6 text-black">
-              {[
-                { name: "Sport Car", color: "#3563E9", value: 17439 },
-                { name: "SUV", color: "#63A9E8", value: 9478 },
-                { name: "Coupe", color: "#2185DE", value: 18197 },
-                { name: "Hatchback", color: "#175D9C", value: 12510 },
-                { name: "MPV", color: "#0D3559", value: 14406 },
-              ].map((car, index) => (
-                <div key={index} className="flex justify-between items-center">
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="w-3 h-3 rounded-full"
-                      style={{ backgroundColor: car.color }}
-                    ></div>
-                    <p className="text-sm">{car.name}</p>
+              {[{ name: "Sport Car", color: "#3563E9", value: 17439 }].map(
+                (car, index) => (
+                  <div key={index} className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: car.color }}
+                      ></div>
+                      <p className="text-sm">{car.name}</p>
+                    </div>
+                    <p className="text-sm font-bold">{car.value.toLocaleString()}</p>
                   </div>
-                  <p className="text-sm font-bold">{car.value.toLocaleString()}</p>
-                </div>
-              ))}
+                )
+              )}
             </div>
           </div>
 
@@ -196,49 +192,26 @@ const Dashboard = () => {
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-lg font-bold text-black mb-4">Recent Transactions</h2>
             <ul className="mt-6 text-black space-y-4">
-              {[
-                {
-                  name: "Nissan GT - R",
-                  date: "20 July",
-                  price: "$80.00",
-                  image: "/car1.png",
-                },
-                {
-                  name: "Koenigsegg",
-                  date: "19 July",
-                  price: "$99.00",
-                  image: "/car2.png",
-                },
-                {
-                  name: "Rolls-Royce",
-                  date: "18 July",
-                  price: "$96.00",
-                  image: "/car3.png",
-                },
-                {
-                  name: "CR - V",
-                  date: "17 July",
-                  price: "$80.00",
-                  image: "/car4.png",
-                },
-              ].map((transaction, index) => (
-                <li key={index} className="flex justify-between items-center">
-                  <div className="flex items-center gap-4">
-                    <Image
-                      src={transaction.image}
-                      alt={transaction.name}
-                      width={50}
-                      height={30}
-                      className="rounded-lg"
-                    />
-                    <div>
-                      <p className="font-bold">{transaction.name}</p>
-                      <p className="text-sm text-gray-500">{transaction.date}</p>
+              {[{ name: "Nissan GT - R", date: "20 July", price: "$80.00", image: "/car1.png" }].map(
+                (transaction, index) => (
+                  <li key={index} className="flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                      <Image
+                        src={transaction.image}
+                        alt={transaction.name}
+                        width={50}
+                        height={30}
+                        className="rounded-lg"
+                      />
+                      <div>
+                        <p className="font-bold">{transaction.name}</p>
+                        <p className="text-sm text-gray-500">{transaction.date}</p>
+                      </div>
                     </div>
-                  </div>
-                  <p className="text-blue-500 font-bold">{transaction.price}</p>
-                </li>
-              ))}
+                    <p className="text-blue-500 font-bold">{transaction.price}</p>
+                  </li>
+                )
+              )}
             </ul>
           </div>
         </section>
@@ -248,9 +221,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-
-
-
-
-
