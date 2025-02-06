@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -33,12 +33,42 @@ const Dashboard = () => {
           {/* Main Menu */}
           <p className="text-sm text-gray-500 mb-4">MAIN MENU</p>
           {[
-            { name: "dashboard", label: "Dashboard", icon: "/home.png", link: "/" },
-            { name: "carRent", label: "Car Rent", icon: "/car.png", link: "/car-rent" },
-            { name: "insight", label: "Insight", icon: "/chart.png", link: "/insight" },
-            { name: "reimburse", label: "Reimburse", icon: "/wallet.png", link: "/reimburse" },
-            { name: "inbox", label: "Inbox", icon: "/message.png", link: "/inbox" },
-            { name: "calendar", label: "Calendar", icon: "/calendar.png", link: "/calendar" },
+            {
+              name: "dashboard",
+              label: "Dashboard",
+              icon: "/home.png",
+              link: "/",
+            },
+            {
+              name: "carRent",
+              label: "Car Rent",
+              icon: "/car.png",
+              link: "/car-rent",
+            },
+            {
+              name: "insight",
+              label: "Insight",
+              icon: "/chart.png",
+              link: "/insight",
+            },
+            {
+              name: "reimburse",
+              label: "Reimburse",
+              icon: "/wallet.png",
+              link: "/reimburse",
+            },
+            {
+              name: "inbox",
+              label: "Inbox",
+              icon: "/message.png",
+              link: "/inbox",
+            },
+            {
+              name: "calendar",
+              label: "Calendar",
+              icon: "/calendar.png",
+              link: "/calendar",
+            },
           ].map((menu) => (
             <Link key={menu.name} href={menu.link}>
               <div
@@ -64,9 +94,24 @@ const Dashboard = () => {
           {/* Preferences */}
           <p className="text-sm text-gray-500 mt-10 mb-4">PREFERENCES</p>
           {[
-            { name: "settings", label: "Settings", icon: "/setting.png", link: "/setting-1" },
-            { name: "help", label: "Help & Center", icon: "/help.png", link: "/help-center" },
-            { name: "darkMode", label: "Dark Mode", icon: "/dark.png", link: "/dark-mode" },
+            {
+              name: "settings",
+              label: "Settings",
+              icon: "/setting.png",
+              link: "/setting-1",
+            },
+            {
+              name: "help",
+              label: "Help & Center",
+              icon: "/help.png",
+              link: "/help-center",
+            },
+            {
+              name: "darkMode",
+              label: "Dark Mode",
+              icon: "/dark.png",
+              link: "/dark-mode",
+            },
           ].map((menu) => (
             <Link key={menu.name} href={menu.link}>
               <div
@@ -116,7 +161,9 @@ const Dashboard = () => {
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
           {/* Details Rental */}
           <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-lg font-bold text-black mb-4">Details Rental</h2>
+            <h2 className="text-lg font-bold text-black mb-4">
+              Details Rental
+            </h2>
             <Image
               src="/Maps.png"
               alt="Map"
@@ -134,7 +181,9 @@ const Dashboard = () => {
                   className="rounded-lg"
                 />
                 <div>
-                  <h3 className="text-lg text-black font-bold">Nissan GT - R</h3>
+                  <h3 className="text-lg text-black font-bold">
+                    Nissan GT - R
+                  </h3>
                   <p className="text-sm text-gray-500">Sport Car</p>
                 </div>
               </div>
@@ -162,7 +211,9 @@ const Dashboard = () => {
 
           {/* Top 5 Car Rentals */}
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-lg font-bold text-black mb-4">Top 5 Car Rentals</h2>
+            <h2 className="text-lg font-bold text-black mb-4">
+              Top 5 Car Rentals
+            </h2>
             <Image
               src="/Top5.png"
               alt="Chart"
@@ -171,47 +222,80 @@ const Dashboard = () => {
               className="mx-auto"
             />
             <div className="mt-6 text-black">
-              {[{ name: "Sport Car", color: "#3563E9", value: 17439 }].map(
-                (car, index) => (
-                  <div key={index} className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <div
-                        className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: car.color }}
-                      ></div>
-                      <p className="text-sm">{car.name}</p>
-                    </div>
-                    <p className="text-sm font-bold">{car.value.toLocaleString()}</p>
+              {[
+                { name: "Sport Car", color: "#002D62", value: 17439 },
+                { name: "SUV", color: "#0066b2", value: 9478 },
+                { name: "coupe", color: "#318CE7", value: 18197 },
+                { name: "Hatchback", color: "#7CB9E8", value: 1250 },
+                { name: "MPV", color: "#AFDBF5", value: 14406 },
+              ].map((car, index) => (
+                <div key={index} className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="w-3 h-3 rounded-full"
+                      style={{ backgroundColor: car.color }}
+                    ></div>
+                    <p className="text-sm">{car.name}</p>
                   </div>
-                )
-              )}
+                  <p className="text-sm font-bold">
+                    {car.value.toLocaleString()}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Recent Transactions */}
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-lg font-bold text-black mb-4">Recent Transactions</h2>
+            <h2 className="text-lg font-bold text-black mb-4">
+              Recent Transactions
+            </h2>
             <ul className="mt-6 text-black space-y-4">
-              {[{ name: "Nissan GT - R", date: "20 July", price: "$80.00", image: "/car1.png" }].map(
-                (transaction, index) => (
-                  <li key={index} className="flex justify-between items-center">
-                    <div className="flex items-center gap-4">
-                      <Image
-                        src={transaction.image}
-                        alt={transaction.name}
-                        width={50}
-                        height={30}
-                        className="rounded-lg"
-                      />
-                      <div>
-                        <p className="font-bold">{transaction.name}</p>
-                        <p className="text-sm text-gray-500">{transaction.date}</p>
-                      </div>
+              {[
+                {
+                  name: "Nissan GT - R",
+                  date: "20 July",
+                  price: "$80.00",
+                  image: "/car1.png",
+                },
+                {
+                  name: "koenigsegg",
+                  date: "19 July",
+                  price: "$99.00",
+                  image: "/car2.png",
+                },
+                {
+                  name: "Rolls-Royce",
+                  date: "18 July",
+                  price: "$96.00",
+                  image: "/car3.png",
+                },
+                {
+                  name: "CR-V",
+                  date: "17 July",
+                  price: "$80.00",
+                  image: "/car4.png",
+                },
+              ].map((transaction, index) => (
+                <li key={index} className="flex justify-between items-center">
+                  <div className="flex items-center gap-4">
+                    <Image
+                      src={transaction.image}
+                      alt={transaction.name}
+                      width={132}
+                      height={70}
+                      className="rounded-lg"
+                    />
+                    <div>
+                      <p className="font-bold">{transaction.name}</p>
+                      <p className="text-sm text-gray-500">
+                        {transaction.date}
+                      </p>
                     </div>
-                    <p className="text-blue-500 font-bold">{transaction.price}</p>
-                  </li>
-                )
-              )}
+                  </div>
+                  <p className="text-blue-500 font-bold">{transaction.price}</p>
+                </li>
+              ))}
             </ul>
           </div>
         </section>
