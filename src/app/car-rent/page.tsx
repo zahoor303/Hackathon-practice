@@ -60,7 +60,7 @@ const CarRent = () => {
                 id="pickupDate"
                 value={pickupDate}
                 onChange={(e) => setPickupDate(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md"
+                className="w-full px-4 py-2 text-gray-700 border rounded-md"
               />
             </div>
 
@@ -71,7 +71,7 @@ const CarRent = () => {
                 id="dropoffDate"
                 value={dropoffDate}
                 onChange={(e) => setDropoffDate(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md"
+                className="w-full px-4 py-2 text-gray-700 border rounded-md"
               />
             </div>
           </div>
@@ -82,7 +82,7 @@ const CarRent = () => {
               id="carType"
               value={carType}
               onChange={(e) => setCarType(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full px-4 py-2 border text-gray-700 rounded-md"
             >
               <option value="">Select a car</option>
               {cars.map((car) => (
