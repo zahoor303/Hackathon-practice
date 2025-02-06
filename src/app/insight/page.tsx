@@ -55,28 +55,28 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
       
         <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h3 className="text-gray-500 text-sm font-medium">Customers</h3>
+          <h3 className="text-gray-600 text-sm font-medium">Customers</h3>
           <p className="text-2xl text-black font-bold mt-2">1.456</p>
           <span className="text-green-500 text-sm">+4.5% Since last week</span>
         </div>
 
       
         <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h3 className="text-gray-500 text-sm font-medium">Revenue</h3>
+          <h3 className="text-gray-600 text-sm font-medium">Revenue</h3>
           <p className="text-2xl text-black font-bold mt-2">$3.345</p>
           <span className="text-red-500 text-sm">-0.10% Since last week</span>
         </div>
 
       
         <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h3 className="text-gray-500 text-sm font-medium">Profit</h3>
+          <h3 className="text-gray-600 text-sm font-medium">Profit</h3>
           <p className="text-2xl text-black font-bold mt-2">60%</p>
           <span className="text-red-500 text-sm">-0.2% Since last week</span>
         </div>
 
       
         <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h3 className="text-gray-500 text-sm font-medium">Invoices</h3>
+          <h3 className="text-gray-600 text-sm font-medium">Invoices</h3>
           <p className="text-2xl text-black font-bold mt-2">1.135</p>
           <span className="text-green-500 text-sm">+1.5% Since last week</span>
         </div>
